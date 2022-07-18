@@ -97,9 +97,9 @@ def insert_db(where, col_name, value):
         print(sql_id)
         cursor.execute(sql_id)
         connect.commit()
-    except Exception as exc:
+    except Exception as exce:
         print("Ошибка базы данных при INSERT данных")
-        print(exc)
+        print(exce)
 
 
 def user_get(user_id):
@@ -276,9 +276,28 @@ if __name__ == '__main__':
                 while condition(sex, 0, 2):
                     sex = question(user_id, "Укажите пол 1-Ж, 2 - М, 0 - неважно")
 
-                status = question(user_id, "Укажите статус 1- не женат (не замужем), 6 - в активном поиске")
-                while condition(status, 1, 6):
-                    status = question(user_id, "Укажите статус 1- не женат (не замужем), 6 - в активном поиске")
+                status = question(user_id, "Укажите статус \n"
+                                           "1- не женат (не замужем),\n"
+                                           " 2 — встречается,\n"
+                                           " 3 — помолвлен(-а),\n"
+                                           "4 — женат (замужем),\n"
+                                           "5 — всё сложно,\n"
+                                           "6 - в активном поиске,\n"
+                                           "7 — влюблен(-а),\n"
+                                           "8 — в гражданском браке.\n")
+
+                while condition(status, 1, 8):
+                    status = question(user_id, "Укажите статус \n"
+                                               "1- не женат (не замужем),\n"
+                                               "2 — встречается,\n"
+                                               "3 — помолвлен(-а),\n"
+                                               "4 — женат (замужем),\n"
+                                               "5 — всё сложно,\n"
+                                               "6 - в активном поиске\n"
+                                               "7 — влюблен(-а),\n"
+                                               "8 — в гражданском браке.\n"
+
+                                      )
 
                 req = users_search(int(age_from), int(age_to), int(city_id), int(sex), int(status))
 
