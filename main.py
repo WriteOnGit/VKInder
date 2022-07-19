@@ -322,6 +322,7 @@ if __name__ == '__main__':
 
                 for num_id, us_id in user_all:
                     if us_id not in select_user_like and us_id not in select_user_dizlike:
+
                         user_photo = photos_get(us_id)
                         popular = {}
                         for i in user_photo['items']:
@@ -340,7 +341,7 @@ if __name__ == '__main__':
                                 att = f'photo{us_id}_{sorted_popular[0][0]},photo{us_id}_{sorted_popular[1][0]},photo{us_id}_{sorted_popular[2][0]},'
 
                         else:
-                            print("Нет фото")
+                            att = False
 
                         kes = VkKeyboard(inline=True)
                         kes.add_button("Да", VkKeyboardColor.POSITIVE)
@@ -349,6 +350,8 @@ if __name__ == '__main__':
                         like = question(user_id,
                                         f"Пользователь по поиску {search_id} номер анкеты {num_id} \n Нравится? https://vk.com/id{us_id} ",
                                         kes, att)
+
+                        
                         if like == "да":
                             insert_db(where="people_like", col_name=("user_id", "like_user_id"), value=(user_id, us_id))
 
@@ -368,6 +371,12 @@ if __name__ == '__main__':
                         elif like == 'my dislike':
                             dizlike(user_id, True)
                             break
+                        else:
+                            insert_db(where="people_dislike", col_name=("user_id", "like_user_id"),
+                                      value=(user_id, us_id))
+
+
+
 
                     else:
                         continue
