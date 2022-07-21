@@ -1,12 +1,3 @@
-"""
-Импортируем нужные библиотеки
-vk_api https://vk-api.readthedocs.io/ документация (импорт для работы с событиями и чатбот кнопками)
-key - в файле 2 параметра group_token и user_token
-urllib3 - чтобы обойти ошибку сертификатов
-sqlite3 - используем простую БД - файл для записи результатов
-random - для генерации случайного значения
-
-"""
 from mydef import *
 from bd import bd_create
 from collections import Counter
@@ -32,7 +23,6 @@ if __name__ == '__main__':
             city = info[0].get("city").get("id")
             city_name = info[0].get("city").get("title")
             relation = info[0].get("relation")
-            print(user_id, bdate, sex, city, city_name, user_name, relation)
 
             if len(bdate) < 5 or bdate is None:
                 age = question(user_id, "Сколько Вам лет?")
@@ -131,7 +121,7 @@ if __name__ == '__main__':
                                             wherer=tuple(('age_from', 'age_to', 'sex', 'city', 'status')),
                                             val=(int(age_from), int(age_to), int(city_id), int(sex), int(status)), fet=False)
 
-                    req = users_search(int(age_from), int(age_to), int(city_id), int(sex), int(status), int(same_search[0])*10)
+                    req = users_search(int(age_from), int(age_to), int(city_id), int(sex), int(status), int(same_search[0])*20)
 
                     insert_db(where="search", col_name=("user_id", "age_from", "age_to", "city", "sex", "status"),
                               value=(user_id, int(age_from), int(age_to), int(city_id), int(sex), int(status)))
@@ -153,7 +143,7 @@ if __name__ == '__main__':
                     same_search = select_db(what="COUNT(id)", froom="search",
                               wherer=tuple(('age_from', 'age_to', 'sex', 'city', 'status')), val=(int(age), int(age), int(city), int(sex), int(relation)), fet=False)
 
-                    req = users_search(int(age), int(age), int(city), int(sex), int(relation), int(same_search[0])*10)
+                    req = users_search(int(age), int(age), int(city), int(sex), int(relation), int(same_search[0])*20)
 
                     insert_db(where="search", col_name=("user_id", "age_from", "age_to", "city", "sex", "status"),
                               value=(user_id, int(age), int(age), int(city), int(sex), int(relation)))
